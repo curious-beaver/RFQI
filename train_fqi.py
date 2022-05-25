@@ -230,11 +230,15 @@ if __name__ == "__main__":
     print(f"Setting: Training PQL-BCQ, Env: {args.env}, Seed: {args.seed}")
     print("---------------------------------------")
 
-    if not os.path.exists("./results"):
-        os.makedirs("./results")
+    # make folders to dump results
+    if not os.path.exists("./logs"):
+        os.makedirs("./logs")
 
     if not os.path.exists("./models"):
         os.makedirs("./models")
+    
+    if not os.path.exists("./videos"):
+        os.makedirs("./videos")
 
     env = gym.make(args.env)
 
