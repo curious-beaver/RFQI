@@ -286,11 +286,11 @@ if __name__ == "__main__":
     # check d4rl option and hindsight option
     # determine data_path, log_path and save_path
     if args.d4rl == 'False' and args.hindsight == 'False':
-        data_path = f'buffers/{args.env}_{args.gendata_pol}_e{args.data_eps}'
+        data_path = f'offline_data/{args.env}_{args.gendata_pol}_e{args.data_eps}'
         save_path = f'FQI_{args.env}_dataeps{args.data_eps}_datapol{args.gendata_pol}{args.comment}'
     elif args.d4rl == 'True' and args.hindsight == 'False':
         env_subname = args.env[0:args.env.find('-')].lower()
-        data_path = f'buffers/d4rl-{env_subname}'
+        data_path = f'offline_data/d4rl-{env_subname}'
         save_path = f'FQI_{args.env}_d4rl'
         if args.d4rl_expert == 'True':
             data_path += '-expert'
@@ -303,7 +303,7 @@ if __name__ == "__main__":
             data_path += '-v2'
         save_path += args.comment
     elif args.d4rl == 'False' and args.hindsight == 'True':
-        data_path = f'buffers/{args.env}_{args.gendata_pol}_hindsight_e{args.data_eps}'
+        data_path = f'offline_data/{args.env}_{args.gendata_pol}_hindsight_e{args.data_eps}'
         save_path = f'FQI_hindsight_{args.env}_dataeps{args.data_eps}_datapol{args.gendata_pol}{args.comment}'
     else:
         raise NotImplementedError
