@@ -305,8 +305,6 @@ class RFQI(object):
                 target_Q = reward - gamma * torch.maximum(etas - target_Q, etas.new_tensor(0)) + (1 - rho) * etas * gamma
                 
             current_Q1, current_Q2 = self.critic(state, action)
-#             print(current_Q1.size())
-#             print(target_Q.size())
             critic_loss = F.mse_loss(current_Q1, target_Q) + F.mse_loss(current_Q2, target_Q)
 
             self.critic_optimizer.zero_grad()
