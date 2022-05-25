@@ -174,9 +174,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # make folders to dump results
-    if not os.path.exists("./results"):
-        os.makedirs("./results")
-                           
     if not os.path.exists("./logs"):
         os.makedirs("./logs")
 
