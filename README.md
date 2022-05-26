@@ -34,6 +34,11 @@ import gym
 
 gym.make('HopperPerturbed-v3')
 ```
+To generate the epsilon-greedy dataset for `CartPole-v0` with `epsilon=0.3`, run the following:
+```
+python generate_offline_data.py --env=CartPole-v0 --gendata_pol=ppo --eps=0.3
+```
+
 To generate the mixed dataset specified in Appendix E.1, run the following:
 ```
 python generate_offline_data.py --env=Hopper-v3 --gendata_pol=sac --eps=0.3 --mixed=True
