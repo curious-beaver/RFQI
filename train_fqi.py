@@ -70,7 +70,7 @@ def train_PQL_BCQ(state_dim, action_dim, max_state, min_action, max_action,
         # only save model if current policy outperforms the current best
         if avg > max_policy_value:
             save_policy(policy, save_path)
-            if  'FrozenLake' not in args.env:
+            if  'FrozenLake' not in args.env and args.video == 'True':
                     generate_gif(policy, args.env, video_path)
             max_policy_value = avg
 
@@ -189,6 +189,8 @@ if __name__ == "__main__":
     parser.add_argument("--mixed", default='False', type=str)
     # extra comment
     parser.add_argument("--comment", default='', type=str)
+    # save video
+    parser.add_argument("--video", default='False', type=str)
 
     # mini batch size for networks
     parser.add_argument("--batch_size", default=100, type=int)  
