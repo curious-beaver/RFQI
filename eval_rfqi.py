@@ -623,28 +623,16 @@ def eval_rfqi(state_dim, action_dim, min_action, max_action, hard, paths,
     if args.env == 'Hopper-v3':
         settings = ['gravity', 'thigh_joint_stiffness', 'leg_joint_stiffness',
                     'foot_joint_stiffness', 'actuator_ctrlrange']
-#         springref = 8.0
         springref = 2.0
-#         ps_g = np.arange(-0.99, 0.0, 0.1)
         ps_g = np.arange(-0.5, 0.0, 0.05)
-#         xs_thijntstif = [0.0, 5.0, 10.0, 15.0, 20.0, 30.0, 60.0]
         xs_thijntstif = np.arange(0.0, 32.5, 2.5)
-#         xs_legjntstif = [0.0, 5.0, 10.0, 15.0, 20.0, 30.0, 60.0]
-#         xs_legjntstif = np.arange(0.0, 32.5, 2.5)
         xs_legjntstif = np.arange(0.0, 60.0, 5.0)
-#         xs_ftjntstif = [0.0, 5.0, 10.0, 15.0, 20.0, 30.0, 60.0]
         xs_ftjntstif = np.arange(0.0, 25.0, 2.5)
-#         xs_act = np.arange(0.0, 1.1, 0.1)
-#         xs_act = np.arange(0.6, 1.05, 0.05)
         xs_act = np.arange(0.85, 1.025, 0.025)
         ps_damp = np.arange(0.0, 1.1, 0.1)
         xs_fric = [0.0, 1.0, 2.0, 3.0, 4.0]
         es = np.arange(0,0.45,0.05)
-        # for hindsight only
-#         ps_damp = np.arange(0.0, 2.1, 0.1)
-#         xs_fric = np.arange(0.0, 11.0, 1.0)
-#         xs_thijntstif = np.arange(0.0, 65.0, 5.0)
-        ##################################
+
         
         # perturb 'gravity'
         setting = 'gravity'
@@ -1023,23 +1011,15 @@ def eval_rfqi(state_dim, action_dim, min_action, max_action, hard, paths,
         settings = ['gravity', 'back_joint_stiffness', 'front_joint_stiffness',
                     'front_actuator_ctrlrange', 'back_actuator_ctrlrange',
                     'joint_damping', 'joint_frictionloss']
+        # for d4rl-medium
         ps_g = np.arange(-0.99, 0.0, 0.1)
-        ps_bjntstif = np.arange(-1.0, 1.1, 0.1)
-        ps_fjntstif = np.arange(-1.0, 1.1, 0.1)
-        ps_damp = np.arange(-1.0, 1.1, 0.1)
+        ps_bjntstif = np.arange(0.0, 0.80, 0.05)
+        ps_fjntstif = np.arange(0.0, 0.80, 0.05)
+        ps_damp = np.arange(-0.5, 0.55, 0.05)
         xs_fact = np.arange(0.3, 1.1, 0.1)
         xs_bact = np.arange(0.3, 1.1, 0.1)
         xs_fric = [0.0, 1.0, 2.0, 3.0, 4.0]
         es = np.arange(0, 1.1, 0.1)
-        # for d4rl-medium
-#         ps_g = np.arange(-0.99, 0.0, 0.1)
-#         ps_bjntstif = np.arange(0.0, 0.80, 0.05)
-#         ps_fjntstif = np.arange(0.0, 0.80, 0.05)
-#         ps_damp = np.arange(-0.5, 0.55, 0.05)
-#         xs_fact = np.arange(0.3, 1.1, 0.1)
-#         xs_bact = np.arange(0.3, 1.1, 0.1)
-#         xs_fric = [0.0, 1.0, 2.0, 3.0, 4.0]
-#         es = np.arange(0, 1.1, 0.1)
         
         # perturb 'gravity'
         setting = 'gravity'
@@ -1445,8 +1425,8 @@ if __name__ == "__main__":
     parser.add_argument("--d4rl", default='False', type=str)
     parser.add_argument("--d4rl_v2", default='False', type=str)
     parser.add_argument("--d4rl_expert", default='False', type=str)
-    # use hindsight dataset
-    parser.add_argument("--hindsight", default='False', type=str)
+    # use mixed policy
+    parser.add_argument("--mixed", default='False', type=str)
     # policy used to generate data
     parser.add_argument("--gendata_pol", default='sac', type=str)
 
@@ -1511,12 +1491,12 @@ if __name__ == "__main__":
     i = args.env.find('-')
     perturbed_env = f'{args.env[:i]}Perturbed{args.env[i:]}'
         
-    # check d4rl option and hindsight option
+    # check d4rl option and mixed option
     # determine data_path, log_path and save_path
-    if args.d4rl == 'False' and args.hindsight == 'False':
+    if args.d4rl == 'False' and args.mixed == 'False':
         save_path = f'RFQI_{perturbed_env}_rho{args.rho}_dataeps{args.data_eps}_datapol{args.gendata_pol}{args.comment}'
         load_path = f'RFQI_{args.env}_rho{args.rho}_dataeps{args.data_eps}_datapol{args.gendata_pol}{args.comment}'
-    elif args.d4rl == 'True' and args.hindsight == 'False':
+    elif args.d4rl == 'True' and args.mixed == 'False':
         save_path = f'RFQI_{perturbed_env}_rho{args.rho}_d4rl'
         load_path = f'RFQI_{args.env}_rho{args.rho}_d4rl'
         if args.d4rl_expert == 'True':
@@ -1524,9 +1504,9 @@ if __name__ == "__main__":
             load_path += '_expert'
         save_path += args.comment
         load_path += args.comment
-    elif args.d4rl == 'False' and args.hindsight == 'True':
-        save_path = f'RFQI_hindsight_{perturbed_env}_rho{args.rho}_dataeps{args.data_eps}_datapol{args.gendata_pol}{args.comment}'
-        load_path = f'RFQI_hindsight_{args.env}_rho{args.rho}_dataeps{args.data_eps}_datapol{args.gendata_pol}{args.comment}'
+    elif args.d4rl == 'False' and args.mixed == 'True':
+        save_path = f'RFQI_mixed_{perturbed_env}_rho{args.rho}_dataeps{args.data_eps}_datapol{args.gendata_pol}{args.comment}'
+        load_path = f'RFQI_mixed_{args.env}_rho{args.rho}_dataeps{args.data_eps}_datapol{args.gendata_pol}{args.comment}'
     else:
         raise NotImplementedError
     paths = dict(load_path=load_path,
@@ -1544,9 +1524,9 @@ if __name__ == "__main__":
     print(f'RFQI attributes:       rho={args.rho}')
     if args.d4rl == 'True':
         print(f'                       trained on d4rl')
-    elif args.hindsight == 'True':
+    elif args.mixed == 'True':
         print(f'                       trained on data with eps={args.data_eps}')
-        print(f'                       data collecting policy is WITH hindsight')
+        print(f'                       data collecting policy is WITH mixed')
     else:
         print(f'                       trained on data with eps={args.data_eps}')
     print(f'                       loading from: {load_path}')    

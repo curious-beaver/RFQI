@@ -134,21 +134,19 @@ def train_rfqi(state_dim, action_dim, min_action, max_action, paths,
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    # algorithm used to generate data
-#     parser.add_argument('data_alg', default='ppo', type=str)
     # epsilon used to generate data
     parser.add_argument('--data_eps', default=0.5, type=float)
     # policy used to generate data
     parser.add_argument('--gendata_pol', default='dqn', type=str)  
     parser.add_argument('--env', default='CartPole-v0', type=str)
     parser.add_argument('--max_trn_steps', default=5e5, type=float)
-    parser.add_argument('--eval_freq', default=1e4, type=float)
+    parser.add_argument('--eval_freq', default=1e3, type=float)
     parser.add_argument('--eval_episodes', default=10, type=int)
     
     parser.add_argument('--seed', default=1024, type=int)
     parser.add_argument('--device', default='cuda', type=str)
     parser.add_argument('--data_size', default=1e6, type=int)
-    parser.add_argument('--batch_size', default=1e5, type=int)
+    parser.add_argument('--batch_size', default=1e3, type=int)
     
     # epsilon in Adam*
     parser.add_argument('--adam_eps', default=1e-6, type=float)
@@ -168,8 +166,8 @@ if __name__ == "__main__":
     parser.add_argument("--d4rl", default='False', type=str)
     parser.add_argument("--d4rl_v2", default='False', type=str)
     parser.add_argument("--d4rl_expert", default='False', type=str)
-    # use hindsight dataset
-    parser.add_argument("--hindsight", default='False', type=str)
+    # use mixed dataset
+    parser.add_argument("--mixed", default='False', type=str)
 
     args = parser.parse_args()
 
@@ -224,12 +222,12 @@ if __name__ == "__main__":
     if args.device not in ['cpu', 'cuda', 'cuda:0', 'cuda:1', 'auto']:
         raise NotImplementedError
     
-    # check d4rl option and hindsight option
+    # check d4rl option and mixed option
     # determine data_path, log_path and save_path
-    if args.d4rl == 'False' and args.hindsight == 'False':
+    if args.d4rl == 'False' and args.mixed == 'False':
         data_path = f'offline_data/{args.env}_{args.gendata_pol}_e{args.data_eps}'
         save_path = f'RFQI_{args.env}_rho{args.rho}_dataeps{args.data_eps}_datapol{args.gendata_pol}{args.comment}'
-    elif args.d4rl == 'True' and args.hindsight == 'False':
+    elif args.d4rl == 'True' and args.mixed == 'False':
         env_subname = args.env[0:args.env.find('-')].lower()
         data_path = f'offline_data/d4rl-{env_subname}'
         save_path = f'RFQI_{args.env}_rho{args.rho}_d4rl'
@@ -243,9 +241,9 @@ if __name__ == "__main__":
         else:
             data_path += '-v2'
         save_path += args.comment
-    elif args.d4rl == 'False' and args.hindsight == 'True':
-        data_path = f'offline_data/{args.env}_{args.gendata_pol}_hindsight_e{args.data_eps}'
-        save_path = f'RFQI_hindsight_{args.env}_rho{args.rho}_dataeps{args.data_eps}_datapol{args.gendata_pol}{args.comment}'
+    elif args.d4rl == 'False' and args.mixed == 'True':
+        data_path = f'offline_data/{args.env}_{args.gendata_pol}_mixed_e{args.data_eps}'
+        save_path = f'RFQI_mixed_{args.env}_rho{args.rho}_dataeps{args.data_eps}_datapol{args.gendata_pol}{args.comment}'
     else:
         raise NotImplementedError
     paths = dict(data_path=data_path, save_path=save_path)
