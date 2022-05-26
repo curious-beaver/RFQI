@@ -1,7 +1,7 @@
 # RFQI
 This repository is an anonymous code submission for Neurips 2022. It will be removed afterwards.
 
-Our method is tested in OpenAI gym discrete control task, [CartPole](https://www.gymlibrary.ml/environments/classic_control/cart_pole/), and two [MuJoCo](http://www.mujoco.org/) continuous control tasks, Hopper and HalfCheetah, using the [D4RL](https://github.com/rail-berkeley/d4rl) benchmark. Thus it is required that MuJoCo and D4RL are both installed prior to using this repo.
+Our method is tested in OpenAI gym discrete control task, [CartPole](https://www.gymlibrary.ml/environments/classic_control/cart_pole/), and two [MuJoCo](http://www.mujoco.org/) continuous control tasks, Hopper and HalfCheetah, using the [D4RL](https://github.com/rail-berkeley/d4rl) benchmark. **Thus it is required that MuJoCo and D4RL are both installed prior to using this repo**.
 
 ## Setup
 Install requirements:
@@ -51,6 +51,10 @@ To get all results, run
 sh scripts/run_cartpole.sh
 sh scripts/run_hopper.sh
 sh scripts/run_half_cheetah.sh
+```
+To evaluate all pre-trained models, run
+```
+sh scripts/eval_all.sh
 ```
 ## Detailed instructions 
 To generate the epsilon-greedy dataset for `CartPole-v0` with `epsilon=0.3`, run the following:
