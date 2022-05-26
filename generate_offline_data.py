@@ -30,9 +30,9 @@ def get_action_type(action_space):
 def generate_dataset(env_name, gendata_pol, epsilon, state_dim, action_dim,
                      args, buffer_size=int(1e6), verbose=False):
     # determine trained policy save path and where to save dataset
-    if args.hindsight == 'True':
-        dataset_name = f'./offline_data/{env_name}_{gendata_pol}_hindsight_e{epsilon}'
-        policy_path = f'./models/{gendata_pol}_hindsight_{env_name}'
+    if args.mixed == 'True':
+        dataset_name = f'./offline_data/{env_name}_{gendata_pol}_mixed_e{epsilon}'
+        policy_path = f'./models/{gendata_pol}_mixed_{env_name}'
     else:
         dataset_name = f'./offline_data/{env_name}_{gendata_pol}_e{epsilon}'
         policy_path = f'./models/{gendata_pol}_{env_name}'
@@ -60,8 +60,8 @@ def generate_dataset(env_name, gendata_pol, epsilon, state_dim, action_dim,
     not_dones = []
     
     # set path
-    if args.hindsight == 'True':
-        dataset_name = f'./offline_data/{env_name}_{gendata_pol}_hindsight_e{epsilon}'
+    if args.mixed == 'True':
+        dataset_name = f'./offline_data/{env_name}_{gendata_pol}_mixed_e{epsilon}'
     else:
         dataset_name = f'./offline_data/{env_name}_{gendata_pol}_e{epsilon}'
     
@@ -132,8 +132,8 @@ if __name__ == "__main__":
     parser.add_argument("--verbose", default='False', type=str)
     parser.add_argument("--device", default='cpu', type=str)
     parser.add_argument("--gendata_pol", default='ppo', type=str)
-    # if gendata_pol is trained with hindsight
-    parser.add_argument("--hindsight", default='False', type=str)
+    # if gendata_pol is trained with mixed traj.
+    parser.add_argument("--mixed", default='False', type=str)
     args = parser.parse_args()
     
     if args.verbose == 'False':
@@ -180,8 +180,8 @@ if __name__ == "__main__":
     if not os.path.exists("./offline_data"):
         os.makedirs("./offline_data")
         
-    # check hindsight option
-    if args.hindsight == 'True' or args.hindsight == 'False':
+    # check mixed option
+    if args.mixed == 'True' or args.mixed == 'False':
         pass
     else:
         raise NotImplementedError
