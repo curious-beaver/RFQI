@@ -7,3 +7,31 @@ After installing MuJoCo and D4RL, you can run the following script to download D
 ```
 python load_d4rl_data.py
 ```
+Next, you need to properly register the perturbed Gym environments which are placed under the folder perturbed_env. A recommended way to do this: first, place cartpole_perturbed.py under gym/envs/classic_control, hopper_perturbed.py and half_cheetah_perturbed.py under gym/envs/mujoco. Then add the following to \__init__.py unde gym/envs:
+```
+register(
+    id="CartPolePerturbed-v0",
+    entry_point="gym.envs.classic_control.cartpole_perturbed:CartPolePerturbedEnv",
+    max_episode_steps=200,
+    reward_threshold=195.0,
+)
+register(
+    id="HopperPerturbed-v3",
+    entry_point="gym.envs.mujoco.hopper_preturbed:HopperPerturbedEnv",
+    max_episode_steps=1000,
+    reward_threshold=3800.0,
+)
+register(
+    id="HalfCheetahPerturbed-v3",
+    entry_point="gym.envs.mujoco.half_cheetah_perturbed:HalfCheetahPerturbedEnv",
+    max_episode_steps=1000,
+    reward_threshold=4800.0,
+)
+```
+You can test this by running:
+```
+import gym
+
+gym.make('HopperPerturbed-v3')
+```
+
