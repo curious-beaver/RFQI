@@ -3,6 +3,7 @@ This repository is an anonymous code submission for Neurips 2022. It will be rem
 
 Our method is tested in OpenAI gym discrete control task, [CartPole](https://www.gymlibrary.ml/environments/classic_control/cart_pole/), and two [MuJoCo](http://www.mujoco.org/) continuous control tasks, Hopper and HalfCheetah, using the [D4RL](https://github.com/rail-berkeley/d4rl) benchmark. Thus it is required that MuJoCo and D4RL are both installed prior to using this repo.
 
+## Setup
 After installing MuJoCo and D4RL, you can run the following script to download D4RL offline data and make it conform to our format:
 ```
 python load_d4rl_data.py
@@ -34,6 +35,18 @@ import gym
 
 gym.make('HopperPerturbed-v3')
 ```
+## TL;DR
+Here you can find shell scripts that take you directly from offline data generation to evaluation results.
+
+To get all data, run
+```
+sh scripts/gen_all_data.sh
+```
+To get `CartPole-v0` results, run
+```
+s
+```
+## Detailed instructions 
 To generate the epsilon-greedy dataset for `CartPole-v0` with `epsilon=0.3`, run the following:
 ```
 python generate_offline_data.py --env=CartPole-v0 --gendata_pol=ppo --eps=0.3
