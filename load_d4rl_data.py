@@ -31,8 +31,7 @@ for env_name in ["hopper-medium-v0", "halfcheetah-medium-v0",
           len(dataset['not_done']))
 
     replay_buffer = DATA(env.observation_space.shape[0], env.action_space.shape[0],
-                         env.init_qpos.shape[0], env.init_qvel.shape[0], "cpu",
-                         len(dataset['observations']))
+                         "cpu", len(dataset['observations']))
     replay_buffer.state = dataset['observations']
     replay_buffer.action = dataset['actions']
     replay_buffer.next_state = dataset['next_observations']
