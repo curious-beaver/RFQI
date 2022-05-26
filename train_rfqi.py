@@ -6,7 +6,6 @@ import os
 import imageio
 from gym import spaces
 import argparse
-import matplotlib.pyplot as plt
 from torch.utils.tensorboard import SummaryWriter
 
 from data_container import DATA
