@@ -66,3 +66,5 @@ You can also train a RFQI policy on `Hopper-v3` with mixed dataset and uncertain
 ```
 python train_rfqi.py --env=Hopper-v3 --data_eps=0.3 --gendata_pol=sac --mixed=True --rho0.5
 ```
+## Miscellaneous
+If you are using a remote machine to run this repo, please remember to assign a display/virtual display for the evaluation suite to properly generate gifs.
