@@ -45,6 +45,7 @@ sh scripts/gen_all_data.sh
 To get all results, run
 ```
 sh scripts/run_cartpole.sh
+sh scripts/run_hopper.sh
 ```
 ## Detailed instructions 
 To generate the epsilon-greedy dataset for `CartPole-v0` with `epsilon=0.3`, run the following:
