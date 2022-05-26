@@ -34,4 +34,15 @@ import gym
 
 gym.make('HopperPerturbed-v3')
 ```
-
+To generate the mixed dataset specified in Appendix E.1, run the following:
+```
+python generate_offline_data.py --env=Hopper-v3 --gendata_pol=sac --eps=0.3 --mixed=True
+```
+To train a RFQI policy on `Hopper-v3` with `d4rl-hopper-medium-v0` and uncertainty hyperparameter `rho=0.5`, please run:
+```
+python train_rfqi.py --env=Hopper-v3 --d4rl=True --rho=0.5
+```
+You can also train a RFQI policy on `Hopper-v3` with mixed dataset and uncertainty hyperparameter `rho=0.5` by running
+```
+python train_rfqi.py --env=Hopper-v3 --data_eps=0.3 --gendata_pol=sac --mixed=True --rho0.5
+```
