@@ -42,7 +42,7 @@ To get all data, run
 ```
 sh scripts/gen_all_data.sh
 ```
-To get `CartPole-v0` results, run
+To get all results, run
 ```
 s
 ```
