@@ -121,7 +121,7 @@ def train_rfqi(state_dim, action_dim, min_action, max_action, paths,
             writer.flush()
             if avg > max_policy_value:
                 save_policy(policy, save_path)
-                if  'FrozenLake' not in args.env:
+                if  'FrozenLake' not in args.env and args.video == 'True':
                     generate_gif(policy, args.env, video_path)
                 max_policy_value = avg
         # step
@@ -142,7 +142,7 @@ if __name__ == "__main__":
     parser.add_argument('--max_trn_steps', default=5e5, type=float)
     parser.add_argument('--eval_freq', default=1e3, type=float)
     parser.add_argument('--eval_episodes', default=10, type=int)
-    
+    parser.add_argument('--video', default='False', type=str)
     parser.add_argument('--seed', default=1024, type=int)
     parser.add_argument('--device', default='cuda', type=str)
     parser.add_argument('--data_size', default=1e6, type=int)
