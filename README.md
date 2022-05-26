@@ -8,10 +8,6 @@ Install requirements:
 ```
 pip install -r requirements.txt
 ```
-After installing MuJoCo and D4RL, you can run the following script to download D4RL offline data and make it conform to our format:
-```
-python load_d4rl_data.py
-```
 Next, you need to properly register the perturbed Gym environments which are placed under the folder perturbed_env. A recommended way to do this: first, place cartpole_perturbed.py under gym/envs/classic_control, hopper_perturbed.py and half_cheetah_perturbed.py under gym/envs/mujoco. Then add the following to \__init__.py unde gym/envs:
 ```
 register(
@@ -38,6 +34,10 @@ You can test this by running:
 import gym
 
 gym.make('HopperPerturbed-v3')
+```
+After installing MuJoCo and D4RL, you can run the following script to download D4RL offline data and make it conform to our format, or you can directly go to TL;DR section below:
+```
+python load_d4rl_data.py
 ```
 ## TL;DR
 Here you can find shell scripts that take you directly from offline data generation to evaluation results.
